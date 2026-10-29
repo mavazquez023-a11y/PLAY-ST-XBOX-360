@@ -192,12 +192,12 @@ body {
 }
 
  /* Sección de xxxx y botones de filtro */
-  .adopcion {
+  .distribucion {
   background-color: #EEE3C8;
   text-align: center;
   }
   
-  .adopcion h2 {
+  .distribucion h2 {
   text-align: center;
   margin-bottom: 20px;
   width: 100%;
@@ -318,6 +318,10 @@ body {
   padding: 40px 20px 20px;
   text-align: center;
   font-family: 'Fredoka', sans-serif;
+  width: 100%;
+  clear:both;
+  display: block;
+  position: relative;
   }
   
   .footer-grid {
