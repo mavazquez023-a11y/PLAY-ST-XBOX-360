@@ -18,19 +18,74 @@ const dwmike = [
 {id: 9, name:"Reposador para control", image:"img/images (5).jpg", gender:"unete", description:"Reposador para mando en forma de gatito." },
 ];
 
-// Obtener los contenedores y botones del DOM
+// Obtener los contenedores y botones del DOM//
 const xxContainer = document.getElementById("distribucion-container");
 const filterButtons = document.querySelectorAll(".filter-btn");
 
 
-// Función para renderizar las tarjetas 
+// Función para renderizar las tarjetas //
 function renderDw(genero) {
-    let dwmikeToRender = [];
-    if (genero === "all") {
-        dwmikeToRender = dwmike;
-    } else {
-        dwmikeToRender = dwmike.filter(Dwmike => Dwmike.genero === genero);
-    }
+    const categoria = genero === "distribucion" ? "productos" : genero;
+    const dwmikeToRender = categoria === "all"
+        ? dwmike
+        : dwmike.filter(dw => dw.gender === categoria);
+
+//Limpia el contenedor antes de renderizar//
+
+xxContainer.innerHTML = '';
 
 
-    }
+if (dwmikeToRender.length === 0) {
+    xxContainer.innerHTML = '<p class="text-center w-100">No hay disponibles para esta categoría.</p>';
+    return;
+    
+}
+
+ // Crea y agrega las tarjetas //
+
+   dwmikeToRender.forEach(dw => {
+        const cardHtml = `
+            <figure class="productos-card" data-gender="${dw.gender}">
+                <img src="${dw.image}" alt="${dw.name}">
+                <figcaption>
+                ${dw.name}
+            </figcaption>
+                <div class="card-description">
+                    <p>${dw.description}</p>
+                </div>
+            </figure>
+        `;
+        xxContainer.insertAdjacentHTML("beforeend", cardHtml);
+    });
+}
+
+// Agrega event listeners a los botones de filtro
+filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        const genero = button.dataset.category;
+
+
+        // Remueve la clase 'active' de todos los botones
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        // Agrega la clase 'active' al botón clickeado
+        button.classList.add("active");
+        
+        // Renderiza las tarjetas con el filtro seleccionado
+        renderDw(genero);
+    });
+});
+
+// Renderizar todos para cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    renderDw('all');
+});
+
+
+// Función para el botón de volver al inicio
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+    
